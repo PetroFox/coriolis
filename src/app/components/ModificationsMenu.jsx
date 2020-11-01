@@ -36,7 +36,6 @@ export default class ModificationsMenu extends TranslatedComponent {
 
     const { m } = props;
     this.state = {
-      blueprintProgress: m.getBlueprintProgress(),
       blueprintMenuOpened: !m.getBlueprint(),
       specialMenuOpened: false
     };
@@ -67,7 +66,7 @@ export default class ModificationsMenu extends TranslatedComponent {
             // onMouseOver={termtip.bind(null, tooltipContent)}
             // onMouseOut={tooltip.bind(null, null)}
             onClick={() => {
-              m.setBlueprint(blueprint, grade);
+              m.setBlueprint(blueprint, grade, 1);
               this.setState({
                 blueprintMenuOpened: false,
                 specialMenuOpened: true,
@@ -219,12 +218,11 @@ export default class ModificationsMenu extends TranslatedComponent {
     const { language, tooltip, termtip } = this.context;
     const translate = language.translate;
     const { m } = this.props;
-    const {
-      blueprintProgress, blueprintMenuOpened, specialMenuOpened,
-    } = this.state;
+    const { blueprintMenuOpened, specialMenuOpened } = this.state;
 
     const appliedBlueprint = m.getBlueprint();
     const appliedExperimental = m.getExperimental();
+    const blueprintProgress = m.getBlueprintProgress();
 
     let renderComponents = [];
     switch (true) {
@@ -275,7 +273,8 @@ export default class ModificationsMenu extends TranslatedComponent {
               m.resetEngineering();
               this.selectedModRef = null;
               this.selectedSpecialRef = null;
-              this.setState({ blueprintProgress: undefined });
+              tooltip(null);
+              this.setState({ blueprintMenuOpened: true });
             }}
             onMouseOver={termtip.bind(null, 'PHRASE_BLUEPRINT_RESET')}
             onMouseOut={tooltip.bind(null, null)}
@@ -294,10 +293,7 @@ export default class ModificationsMenu extends TranslatedComponent {
                     'section-menu button-inline-menu',
                     { active: blueprintProgress === 0 },
                   )} style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    m.setBlueprintProgress(0);
-                    this.setState({ blueprintProgress: 0 });
-                  }}
+                  onClick={() => m.setBlueprintProgress(0)}
                   onMouseOver={termtip.bind(null, 'PHRASE_BLUEPRINT_WORST')}
                   onMouseOut={tooltip.bind(null, null)}
                 >{translate('0%')}</td>
@@ -306,10 +302,7 @@ export default class ModificationsMenu extends TranslatedComponent {
                     'section-menu button-inline-menu',
                     { active: blueprintProgress === 0.5 },
                   )} style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    m.setBlueprintProgress(0.5);
-                    this.setState({ blueprintProgress: 0.5 });
-                  }}
+                  onClick={() => m.setBlueprintProgress(0.5)}
                   onMouseOver={termtip.bind(null, 'PHRASE_BLUEPRINT_FIFTY')}
                   onMouseOut={tooltip.bind(null, null)}
                 >{translate('50%')}</td>
@@ -319,10 +312,7 @@ export default class ModificationsMenu extends TranslatedComponent {
                     { active: blueprintProgress === 1 },
                   )}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    m.setBlueprintProgress(1);
-                    this.setState({ blueprintProgress: 1 });
-                  }}
+                  onClick={() => m.setBlueprintProgress(1)}
                   onMouseOver={termtip.bind(null, 'PHRASE_BLUEPRINT_BEST')}
                   onMouseOut={tooltip.bind(null, null)}
                 >{translate('100%')}</td>
@@ -332,11 +322,7 @@ export default class ModificationsMenu extends TranslatedComponent {
                     { active: blueprintProgress % 0.5 !== 0 },
                   )}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    const blueprintProgress = Math.random();
-                    m.setBlueprintProgress(blueprintProgress);
-                    this.setState({ blueprintProgress });
-                  }}
+                  onClick={() => m.setBlueprintProgress(Math.random())}
                   onMouseOver={termtip.bind(null, 'PHRASE_BLUEPRINT_RANDOM')}
                   onMouseOut={tooltip.bind(null, null)}
                 >{translate('random')}</td>

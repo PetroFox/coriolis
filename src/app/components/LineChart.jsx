@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ContainerDimensions from 'react-container-dimensions';
 import * as d3 from 'd3';
 import TranslatedComponent from './TranslatedComponent';
+import autoBind from 'auto-bind';
 
 const MARGIN = { top: 15, right: 20, bottom: 35, left: 60 };
 
@@ -44,13 +45,7 @@ export default class LineChart extends TranslatedComponent {
    */
   constructor(props, context) {
     super(props);
-
-    this._updateDimensions = this._updateDimensions.bind(this);
-    this._updateSeries = this._updateSeries.bind(this);
-    this._tooltip = this._tooltip.bind(this);
-    this._showTip = this._showTip.bind(this);
-    this._hideTip = this._hideTip.bind(this);
-    this._moveTip = this._moveTip.bind(this);
+    autoBind(this);
 
     const series = props.series;
 

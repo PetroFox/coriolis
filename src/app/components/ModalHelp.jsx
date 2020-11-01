@@ -12,14 +12,6 @@ export default class ModalHelp extends TranslatedComponent {
   };
 
   /**
-   * Constructor
-   * @param  {Object} props   React Component properties
-   */
-  constructor(props) {
-    super(props);
-  }
-
-  /**
    * Render the modal
    * @return {React.Component} Modal Content
    */

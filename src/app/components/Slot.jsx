@@ -79,7 +79,7 @@ export default class Slot extends TranslatedComponent {
         )}
       </div>;
     } else {
-      let classRating = String(m.getClass()) + m.getRating();
+      let classRating = m.getClassRating();
       let { drag, drop } = this.props;
 
       // Modifications tooltip shows blueprint and grade, if available
